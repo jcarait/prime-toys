@@ -7,7 +7,7 @@
 [![Version](https://badge.fury.io/gh/tterb%2FHyde.svg)](https://badge.fury.io/gh/tterb%2FHyde)
 ## Deployment
 
-* [Heroku Deployment](https://prime-toys-trading.herokuapp.com/)
+* [Heroku Deployment](https://prime-toys.herokuapp.com/)
 
 ## Description
 

@@ -28,9 +28,12 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 // import Layout from "./components/layout/layout"
 
+// setup links for uri which can be modified by creating an environment variable
+const uriLink = process.env.PROD ? "/graphql" : "http://localhost:3001/graphql";
+
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
-  uri: "/graphql",
+  uri: uriLink,
 });
 
 // Construct request middleware that will attach the JWT token to every request as an `authorization` header

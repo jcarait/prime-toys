@@ -1,4 +1,5 @@
 // Dependencies
+
 import React from 'react';
 import { Provider } from 'react-redux';
 import {
@@ -26,10 +27,13 @@ import Details from './pages/toyDetails';
 // Components
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+
 // import Layout from "./components/layout/layout"
 
 // setup links for uri which can be modified by creating an environment variable
-const uriLink = process.env.PROD ? '/graphql' : 'http://localhost:3001/graphql';
+const uriLink = '/graphql';
+
+// const devuriLink = 'http://localhost:3001/graphql';
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({

@@ -8,7 +8,7 @@ import AddToy from '../components/AddToy';
 import ToyCards from '../components/ToyCard';
 
 import { QUERY_ALL_TOYS } from '../utils/queries';
-import { REMOVE_TOY } from '../utils/mutations';
+import { DELETE_LISTING } from '../utils/mutations';
 
 export default function Profile({ listings, _id }) {
   const GET_USER_LISTINGS = gql`
@@ -34,14 +34,6 @@ export default function Profile({ listings, _id }) {
     }
   `;
 
-  const DELETE_LISTING = gql`
-    mutation deleteListing($id: ID) {
-      removeToy(_id: $id) {
-        _id
-      }
-    }
-  `;
-  // using our API to query our database for users which contain all their listings
   const {
     loading,
     data: user,
@@ -88,8 +80,6 @@ export default function Profile({ listings, _id }) {
         const updatedListings = existingListings.toys.filter(
           (listing) => listing._id !== value
         );
-        console.log(existingListings);
-        console.log(updatedListings);
 
         cache.writeQuery(
           {

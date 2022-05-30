@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 // defining our mutation API
 export const LOGIN_USER = gql`
   mutation login($username: String!, $password: String!) {
@@ -42,8 +42,8 @@ export const ADD_TOY = gql`
   }
 `;
 
-export const REMOVE_TOY = gql`
-  mutation RemoveToy($id: ID) {
+export const DELETE_LISTING = gql`
+  mutation deleteListing($id: ID) {
     removeToy(_id: $id) {
       _id
     }

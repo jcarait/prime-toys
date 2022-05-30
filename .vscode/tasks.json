@@ -7,6 +7,13 @@
 			"problemMatcher": [],
 			"label": "npm: develop",
 			"detail": "concurrently \"cd server && npm run watch\" \"cd client && npm start\""
+		},
+		{
+			"type": "npm",
+			"script": "seed",
+			"problemMatcher": [],
+			"label": "npm: seed",
+			"detail": "cd server && npm run seed"
 		}
 	]
 }

@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
-import { useQuery } from "@apollo/client";
-import { NavLink } from "react-router-dom";
+import React from 'react';
+import { useQuery } from '@apollo/client';
+import { NavLink } from 'react-router-dom';
 
-import ToyCard from "../components/ToyCard";
-import { QUERY_ALL_TOYS } from "../utils/queries";
+import ToyCard from '../components/ToyCard';
+import { QUERY_ALL_TOYS } from '../utils/queries';
 
-import "./home.scss";
+import './home.scss';
 
 export default function Home() {
   // API call to fetch all toys and then splicing it to get the most recent items

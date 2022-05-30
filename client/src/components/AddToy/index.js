@@ -1,32 +1,32 @@
-import React, { useState } from "react";
-import { useMutation } from "@apollo/client";
-import { ADD_TOY } from "../../utils/mutations";
-import { useQuery } from "@apollo/client";
-import Category from "../CategoryId";
-import Condition from "../ConditionId";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import React, { useState } from 'react';
+import { useMutation } from '@apollo/client';
+import { ADD_TOY } from '../../utils/mutations';
+import { useQuery } from '@apollo/client';
+import Category from '../CategoryId';
+import Condition from '../ConditionId';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-import "./AddToy.scss";
+import './AddToy.scss';
 
-import { QUERY_CATEGORY, QUERY_CONDITION } from "../../utils/queries";
+import { QUERY_CATEGORY, QUERY_CONDITION } from '../../utils/queries';
 
 const AddToy = (data) => {
   // defining the initial state of our add toy form to be blank
   const [toyData, setToyData] = useState({
-    name: "",
-    description: "",
-    image: "",
-    category: "",
-    condition: "",
+    name: '',
+    description: '',
+    image: '',
+    category: '',
+    condition: '',
   });
 
   // creating user notifications based on the listing attempts
   const addNotify = () => {
-    toast("listing added successfully");
+    toast('listing added successfully');
   };
   const errorNotify = () => {
-    toast("listing error, please select all fields");
+    toast('listing error, please select all fields');
   };
 
   // setting the default value for listings of toy to be free if none is specified
@@ -89,11 +89,11 @@ const AddToy = (data) => {
     }
     // returning the state of our form to be blank
     setToyData({
-      name: "",
-      description: "",
-      image: "",
-      category: "",
-      condition: "",
+      name: '',
+      description: '',
+      image: '',
+      category: '',
+      condition: '',
     });
   };
 

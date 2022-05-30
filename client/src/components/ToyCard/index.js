@@ -1,25 +1,32 @@
-
-import React, { useState } from "react";
-import { useMatch } from "react-router-dom";
-import { useMutation } from "@apollo/client";
-import { REMOVE_TOY } from "../../utils/mutations";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import React, { useState } from 'react';
+import { useMatch } from 'react-router-dom';
+import { useMutation } from '@apollo/client';
+import { REMOVE_TOY } from '../../utils/mutations';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { NavLink } from 'react-router-dom';
-import Details from '../../pages/toyDetails'
+import Details from '../../pages/toyDetails';
 import './ToyCard.scss';
 
 export const ToyContext = React.createContext();
 
-
 export default function ToyCard(card) {
-  // deconstructing the parameters passed to ToyCard 
-  const { id, name, image, category, isFree, condition, update, onClickRemove } = card;
+  // deconstructing the parameters passed to ToyCard
+  const {
+    id,
+    name,
+    image,
+    category,
+    isFree,
+    condition,
+    update,
+    onClickRemove,
+  } = card;
   // calling our remove API
   const [RemoveToy] = useMutation(REMOVE_TOY);
   // notifies user that a toy was successfully removed
   const removeNotify = () => {
-    toast("listing removed successfully");
+    toast('listing removed successfully');
   };
 
   // using our API to remove a specific toy from the database
@@ -46,7 +53,7 @@ export default function ToyCard(card) {
           <button className="btn">Update</button>
           <button
             className="btn btn-outline"
-            name="id"
+            name="remove-btn"
             value={id}
             onClick={onClickRemove}
           >
@@ -57,7 +64,9 @@ export default function ToyCard(card) {
     } else {
       return (
         <div className="card-footer">
-          <button className="btn btn-details"><NavLink to="/details">Details</NavLink></button>
+          <button className="btn btn-details">
+            <NavLink to="/details">Details</NavLink>
+          </button>
           <button className="btn btn-outline">Trade</button>
         </div>
       );
@@ -85,7 +94,7 @@ export default function ToyCard(card) {
             )}
           </div>
         </div>
-        <ProfileCardButtons/>
+        <ProfileCardButtons />
       </div>
     </div>
   );

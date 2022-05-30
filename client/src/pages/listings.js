@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { useQuery } from "@apollo/client";
+import React, { useState, useEffect } from 'react';
+import { useQuery } from '@apollo/client';
 
-import "./listings.scss";
+import './listings.scss';
 
-import ToyCard from "../components/ToyCard";
+import ToyCard from '../components/ToyCard';
 
-import { QUERY_ALL_TOYS } from "../utils/queries";
+import { QUERY_ALL_TOYS } from '../utils/queries';
 
 export default function Listings() {
   // defaults the filter to be all
-  const [activeFilter, setActiveFilter] = useState("all");
+  const [activeFilter, setActiveFilter] = useState('all');
 
   // querying our API to fetch all toys on the database
   const { loading, data, error } = useQuery(QUERY_ALL_TOYS);
@@ -28,11 +28,11 @@ export default function Listings() {
     const { value } = event.target;
     setActiveFilter(value);
 
-    if (value === "all") {
+    if (value === 'all') {
       return setToyData(toys);
     }
 
-    if (value === "true") {
+    if (value === 'true') {
       const isFree = toys.filter((toy) => {
         return !!toy.isFree;
       });
@@ -40,7 +40,7 @@ export default function Listings() {
       setToyData(isFree);
     }
 
-    if (value === "false") {
+    if (value === 'false') {
       const isTradeable = toys.filter((toy) => {
         return !toy.isFree;
       });

@@ -29,21 +29,6 @@ export default function ToyCard(card) {
     toast('listing removed successfully');
   };
 
-  // using our API to remove a specific toy from the database
-  const removeToyHandler = async (event) => {
-    event.preventDefault();
-    const { name, value } = event.target;
-    try {
-      const removeToyMutation = await RemoveToy({
-        variables: {
-          id: value,
-        },
-      });
-      removeNotify();
-    } catch (err) {
-      console.log(err);
-    }
-  };
   const ProfileCardButtons = () => {
     const match = useMatch('/profile');
     // specifying the buttons on the toy card based on which page the user on viewing

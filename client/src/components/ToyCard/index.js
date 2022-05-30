@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { useMatch } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
-import { REMOVE_TOY } from '../../utils/mutations';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { NavLink } from 'react-router-dom';
@@ -23,7 +21,6 @@ export default function ToyCard(card) {
     onClickRemove,
   } = card;
   // calling our remove API
-  const [RemoveToy] = useMutation(REMOVE_TOY);
   // notifies user that a toy was successfully removed
   const removeNotify = () => {
     toast('listing removed successfully');

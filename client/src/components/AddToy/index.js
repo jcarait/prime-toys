@@ -11,7 +11,11 @@ import Axios from 'axios';
 
 import './AddToy.scss';
 
-import { QUERY_CATEGORY, QUERY_CONDITION } from '../../utils/queries';
+import {
+  QUERY_CATEGORY,
+  QUERY_CONDITION,
+  QUERY_USER,
+} from '../../utils/queries';
 
 const AddToy = (data) => {
   // defining the initial state of our add toy form to be blank
@@ -25,19 +29,6 @@ const AddToy = (data) => {
 
   const [imageSelected, setImageSelected] = useState('');
   const [previewSource, setPreviewSource] = useState('');
-
-  const uploadImage = () => {
-    const formData = new FormData();
-    formData.append('file', imageSelected);
-    formData.append('upload_preset', 'rtvr2kdz');
-
-    Axios.post(
-      'https://api.cloudinary.com/v1_1/hmpkwjtxf/image/upload',
-      formData
-    ).then((response) => {
-      console.log(response);
-    });
-  };
 
   const handleFileInputChange = (e) => {
     const file = e.target.files[0];
@@ -66,14 +57,9 @@ const AddToy = (data) => {
   const [isFree, setIsFree] = useState(true);
 
   // querying the categories for the listing
-  const { data: category } = useQuery(QUERY_CATEGORY);
-
-  const categoryData = category?.categories || [];
-
-  // querying the conditions for the listing
-  const { data: condition } = useQuery(QUERY_CONDITION);
-
-  const conditionData = condition?.conditions || [];
+  const { loading: categoryLoading, data: category } = useQuery(QUERY_CATEGORY);
+  const { loading: conditionLoading, data: condition } =
+    useQuery(QUERY_CONDITION);
 
   // changing the state of the free/trade based on the users section
   const handleIsFree = (event) => {
@@ -132,6 +118,11 @@ const AddToy = (data) => {
       condition: '',
     });
   };
+
+  if (categoryLoading || conditionLoading) return <div> Loading ... </div>;
+
+  const categoryData = category?.categories || [];
+  const conditionData = condition?.conditions || [];
 
   return (
     <div className="toy-form">
@@ -195,10 +186,10 @@ const AddToy = (data) => {
               className="render-categoryOptions"
               name="category"
               onChange={handleAddToy}
-              value={categoryData[0]._id}
               required
             >
-              {categoryData &&
+              <option value="">Choose one</option>
+              {categoryData.length &&
                 categoryData.map((category) => (
                   <Category
                     key={category._id}
@@ -214,10 +205,10 @@ const AddToy = (data) => {
               className="render-categoryOptions"
               name="condition"
               onChange={handleAddToy}
-              value={toyData.condition._id}
               required
             >
-              {conditionData &&
+              <option value="">Choose one</option>
+              {conditionData.length &&
                 conditionData.map((condition) => (
                   <Condition
                     key={condition._id}

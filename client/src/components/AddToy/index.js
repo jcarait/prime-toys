@@ -4,6 +4,7 @@ import { ADD_TOY } from '../../utils/mutations';
 import { useQuery } from '@apollo/client';
 import Category from '../CategoryId';
 import Condition from '../ConditionId';
+import UploadImage from '../Upload';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -142,13 +143,14 @@ const AddToy = (data) => {
             required
           ></input>
           <label htmlFor="toyImage">Image:</label>
-          <input
+          {/* <input
             type="text"
             name="image"
             onChange={handleAddToy}
             value={toyData.image}
             required
-          ></input>
+          ></input> */}
+          <UploadImage />
           <label>
             Category:
             <select

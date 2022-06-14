@@ -58,7 +58,7 @@ export default function ToyCard(card) {
   return (
     <div className="card">
       <div className="card-image">
-        <img alt={name} tabIndex={0} src={`/images/${image}`} />
+        <img alt={name} tabIndex={0} src={`${image}`} />
       </div>
 
       <div className="card-body">

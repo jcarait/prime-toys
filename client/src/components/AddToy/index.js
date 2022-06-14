@@ -4,12 +4,18 @@ import { ADD_TOY } from '../../utils/mutations';
 import { useQuery } from '@apollo/client';
 import Category from '../CategoryId';
 import Condition from '../ConditionId';
+import UploadImage from '../Upload';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Axios from 'axios';
 
 import './AddToy.scss';
 
-import { QUERY_CATEGORY, QUERY_CONDITION } from '../../utils/queries';
+import {
+  QUERY_CATEGORY,
+  QUERY_CONDITION,
+  QUERY_USER,
+} from '../../utils/queries';
 
 const AddToy = (data) => {
   // defining the initial state of our add toy form to be blank
@@ -20,6 +26,24 @@ const AddToy = (data) => {
     category: '',
     condition: '',
   });
+
+  const [imageSelected, setImageSelected] = useState('');
+  const [previewSource, setPreviewSource] = useState('');
+
+  const handleFileInputChange = (e) => {
+    const file = e.target.files[0];
+    previewFile(file);
+    setImageSelected(file);
+  };
+
+  const previewFile = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      console.log(reader.result);
+      setPreviewSource(reader.result);
+    };
+  };
 
   // creating user notifications based on the listing attempts
   const addNotify = () => {
@@ -33,23 +57,9 @@ const AddToy = (data) => {
   const [isFree, setIsFree] = useState(true);
 
   // querying the categories for the listing
-  const { loading: loading1, data: data1 } = useQuery(QUERY_CATEGORY);
-  let categoryData;
-
-  if (data1) {
-    categoryData = data1.categories;
-  } else {
-    categoryData = [];
-  }
-
-  // querying the conditions for the listing
-  const { loading: loading2, data: data2 } = useQuery(QUERY_CONDITION);
-  let conditionData;
-  if (data2) {
-    conditionData = data2.conditions;
-  } else {
-    conditionData = [];
-  }
+  const { loading: categoryLoading, data: category } = useQuery(QUERY_CATEGORY);
+  const { loading: conditionLoading, data: condition } =
+    useQuery(QUERY_CONDITION);
 
   // changing the state of the free/trade based on the users section
   const handleIsFree = (event) => {
@@ -68,13 +78,25 @@ const AddToy = (data) => {
   // using our add toy mutation to make an API call
   const submitToyHandler = async (event) => {
     event.preventDefault();
+    const formData = new FormData();
+    formData.append('file', imageSelected);
+    formData.append('upload_preset', 'rtvr2kdz');
+
+    const response = await Axios.post(
+      'https://api.cloudinary.com/v1_1/hmpkwjtxf/image/upload',
+      formData
+    );
+    const imageData = response;
+    const ImageUrl = response.data.url;
+    console.log(imageData);
+
     try {
       const toyMutationResponse = await AddToy({
         variables: {
           input: {
             name: toyData.name,
             description: toyData.description,
-            image: toyData.image,
+            image: ImageUrl,
             category: { _id: toyData.category },
             isFree: isFree,
             condition: { _id: toyData.condition },
@@ -96,6 +118,11 @@ const AddToy = (data) => {
       condition: '',
     });
   };
+
+  if (categoryLoading || conditionLoading) return <div> Loading ... </div>;
+
+  const categoryData = category?.categories || [];
+  const conditionData = condition?.conditions || [];
 
   return (
     <div className="toy-form">
@@ -142,29 +169,34 @@ const AddToy = (data) => {
             required
           ></input>
           <label htmlFor="toyImage">Image:</label>
-          <input
+          {/* <input
             type="text"
             name="image"
             onChange={handleAddToy}
             value={toyData.image}
             required
-          ></input>
+          ></input> */}
+          <UploadImage
+            inputChange={handleFileInputChange}
+            preview={previewSource}
+          />
           <label>
             Category:
             <select
               className="render-categoryOptions"
               name="category"
               onChange={handleAddToy}
-              value={toyData.category._id}
               required
             >
-              {categoryData.map((category) => (
-                <Category
-                  key={category._id}
-                  category={category.name}
-                  id={category._id}
-                />
-              ))}
+              <option value="">Choose one</option>
+              {categoryData.length &&
+                categoryData.map((category) => (
+                  <Category
+                    key={category._id}
+                    category={category.name}
+                    id={category._id}
+                  />
+                ))}
             </select>
           </label>
           <label>
@@ -173,16 +205,17 @@ const AddToy = (data) => {
               className="render-categoryOptions"
               name="condition"
               onChange={handleAddToy}
-              value={toyData.condition._id}
               required
             >
-              {conditionData.map((condition) => (
-                <Condition
-                  key={condition._id}
-                  condition={condition.name}
-                  id={condition._id}
-                />
-              ))}
+              <option value="">Choose one</option>
+              {conditionData.length &&
+                conditionData.map((condition) => (
+                  <Condition
+                    key={condition._id}
+                    condition={condition.name}
+                    id={condition._id}
+                  />
+                ))}
             </select>
           </label>
           <div className="submit-btn-container">

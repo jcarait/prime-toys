@@ -1,24 +1,24 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 // defining our query API
 export const QUERY_ALL_TOYS = gql`
-{
-  toys {
-    _id
-    name
-    description
-    image
-    category {
+  {
+    toys {
       _id
       name
+      description
+      image
+      category {
+        _id
+        name
+      }
+      condition {
+        _id
+        name
+      }
+      createdAt
+      isFree
     }
-    condition {
-      _id
-      name
-    }
-    createdAt
-    isFree
   }
-}
 `;
 export const QUERY_USER = gql`
   {
@@ -73,6 +73,29 @@ export const QUERY_USER_TOYS = gql`
       isFree
       category {
         name
+      }
+    }
+  }
+`;
+
+export const GET_USER_LISTINGS = gql`
+  query getUser {
+    user {
+      _id
+      username
+      listings {
+        _id
+        name
+        description
+        image
+        createdAt
+        isFree
+        category {
+          _id
+        }
+        condition {
+          _id
+        }
       }
     }
   }

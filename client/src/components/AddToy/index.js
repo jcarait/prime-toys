@@ -14,7 +14,7 @@ import './AddToy.scss';
 import {
   QUERY_CATEGORY,
   QUERY_CONDITION,
-  QUERY_USER,
+  GET_USER_LISTINGS,
 } from '../../utils/queries';
 
 const AddToy = (data) => {
@@ -73,7 +73,12 @@ const AddToy = (data) => {
   };
 
   // calling our add toy mutation, API call
-  const [AddToy] = useMutation(ADD_TOY);
+  const [AddToy] = useMutation(ADD_TOY, {
+    refetchQueries: [
+      { query: GET_USER_LISTINGS }, // DocumentNode object parsed with gql
+      'getUserToys', // Query name
+    ],
+  });
 
   // using our add toy mutation to make an API call
   const submitToyHandler = async (event) => {

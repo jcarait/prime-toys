@@ -7,6 +7,7 @@ import Condition from '../ConditionId';
 import UploadImage from '../Upload';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Axios from 'axios';
 
 import './AddToy.scss';
 
@@ -22,6 +23,37 @@ const AddToy = (data) => {
     condition: '',
   });
 
+  const [imageSelected, setImageSelected] = useState('');
+  const [previewSource, setPreviewSource] = useState('');
+
+  const uploadImage = () => {
+    const formData = new FormData();
+    formData.append('file', imageSelected);
+    formData.append('upload_preset', 'rtvr2kdz');
+
+    Axios.post(
+      'https://api.cloudinary.com/v1_1/hmpkwjtxf/image/upload',
+      formData
+    ).then((response) => {
+      console.log(response);
+    });
+  };
+
+  const handleFileInputChange = (e) => {
+    const file = e.target.files[0];
+    previewFile(file);
+    setImageSelected(file);
+  };
+
+  const previewFile = (file) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      console.log(reader.result);
+      setPreviewSource(reader.result);
+    };
+  };
+
   // creating user notifications based on the listing attempts
   const addNotify = () => {
     toast('listing added successfully');
@@ -34,23 +66,14 @@ const AddToy = (data) => {
   const [isFree, setIsFree] = useState(true);
 
   // querying the categories for the listing
-  const { loading: loading1, data: data1 } = useQuery(QUERY_CATEGORY);
-  let categoryData;
+  const { data: category } = useQuery(QUERY_CATEGORY);
 
-  if (data1) {
-    categoryData = data1.categories;
-  } else {
-    categoryData = [];
-  }
+  const categoryData = category?.categories || [];
 
   // querying the conditions for the listing
-  const { loading: loading2, data: data2 } = useQuery(QUERY_CONDITION);
-  let conditionData;
-  if (data2) {
-    conditionData = data2.conditions;
-  } else {
-    conditionData = [];
-  }
+  const { data: condition } = useQuery(QUERY_CONDITION);
+
+  const conditionData = condition?.conditions || [];
 
   // changing the state of the free/trade based on the users section
   const handleIsFree = (event) => {
@@ -69,13 +92,25 @@ const AddToy = (data) => {
   // using our add toy mutation to make an API call
   const submitToyHandler = async (event) => {
     event.preventDefault();
+    const formData = new FormData();
+    formData.append('file', imageSelected);
+    formData.append('upload_preset', 'rtvr2kdz');
+
+    const response = await Axios.post(
+      'https://api.cloudinary.com/v1_1/hmpkwjtxf/image/upload',
+      formData
+    );
+    const imageData = response;
+    const ImageUrl = response.data.url;
+    console.log(imageData);
+
     try {
       const toyMutationResponse = await AddToy({
         variables: {
           input: {
             name: toyData.name,
             description: toyData.description,
-            image: toyData.image,
+            image: ImageUrl,
             category: { _id: toyData.category },
             isFree: isFree,
             condition: { _id: toyData.condition },
@@ -150,23 +185,27 @@ const AddToy = (data) => {
             value={toyData.image}
             required
           ></input> */}
-          <UploadImage />
+          <UploadImage
+            inputChange={handleFileInputChange}
+            preview={previewSource}
+          />
           <label>
             Category:
             <select
               className="render-categoryOptions"
               name="category"
               onChange={handleAddToy}
-              value={toyData.category._id}
+              value={categoryData[0]._id}
               required
             >
-              {categoryData.map((category) => (
-                <Category
-                  key={category._id}
-                  category={category.name}
-                  id={category._id}
-                />
-              ))}
+              {categoryData &&
+                categoryData.map((category) => (
+                  <Category
+                    key={category._id}
+                    category={category.name}
+                    id={category._id}
+                  />
+                ))}
             </select>
           </label>
           <label>
@@ -178,13 +217,14 @@ const AddToy = (data) => {
               value={toyData.condition._id}
               required
             >
-              {conditionData.map((condition) => (
-                <Condition
-                  key={condition._id}
-                  condition={condition.name}
-                  id={condition._id}
-                />
-              ))}
+              {conditionData &&
+                conditionData.map((condition) => (
+                  <Condition
+                    key={condition._id}
+                    condition={condition.name}
+                    id={condition._id}
+                  />
+                ))}
             </select>
           </label>
           <div className="submit-btn-container">

@@ -1,37 +1,14 @@
-import React, { useState } from 'react';
-import Axios from 'axios';
+import React, { useEffect, useState } from 'react';
 
-export default function UploadImage() {
-  const [imageSelected, setImageSelected] = useState('');
-  const [imageValue, setImageValue] = useState('');
-  const [imageAltText, setImageAlt] = useState('');
-
-  const uploadImage = () => {
-    const formData = new FormData();
-    formData.append('file', imageSelected);
-    formData.append('upload_preset', 'rtvr2kdz');
-
-    Axios.post(
-      'https://api.cloudinary.com/v1_1/hmpkwjtxf/image/upload',
-      formData
-    ).then((response) => {
-      setImageValue(response.data.url);
-      setImageAlt(response.data.original_filename);
-    });
-  };
+export default function UploadImage(props) {
+  const { inputChange, preview } = props;
 
   return (
     <>
-      <input
-        type="file"
-        onChange={(event) => {
-          setImageSelected(event.target.files[0]);
-        }}
-      ></input>
-      <button type="button" onClick={uploadImage}>
-        Upload
-      </button>
-      <img src={imageValue} alt={imageAltText}></img>
+      <input type="file" onChange={inputChange}></input>
+      {preview && (
+        <img src={preview} alt="chosen" style={{ height: '300px' }}></img>
+      )}
     </>
   );
 }

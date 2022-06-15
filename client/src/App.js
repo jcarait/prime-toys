@@ -32,7 +32,7 @@ import Footer from './components/Footer';
 // import Layout from "./components/layout/layout"
 
 // setup links for uri which can be modified by creating an environment variable
-const uriLink = 'http://localhost:3001/graphql';
+const uriLink = '/graphql';
 
 // const devuriLink = 'http://localhost:3001/graphql';
 

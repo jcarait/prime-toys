@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useQuery, useMutation, gql } from '@apollo/client';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Navigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import './profile.scss';
 
@@ -46,13 +47,20 @@ export default function Profile({ listings, _id }) {
     variables: { _id },
   });
 
-  const [removeToy, { loading: deletingListing, error: deleteListingError }] =
-    useMutation(DELETE_LISTING);
+  const [removeToy] = useMutation(DELETE_LISTING);
 
   const userListings = user?.user.listings || [];
 
+  const userListingCondition = user?.user.listings[0].category || [];
+
+  console.log(userListingCondition);
+
+  const removeNotify = () => {
+    toast(`Listing removed successfully`);
+  };
+
   const removeToyHandler = (e) => {
-    const { name, value } = e.target;
+    const { value } = e.target;
     removeToy({
       variables: {
         id: value,
@@ -93,6 +101,7 @@ export default function Profile({ listings, _id }) {
         );
       },
     });
+    removeNotify();
   };
 
   if (loading) {
@@ -100,8 +109,7 @@ export default function Profile({ listings, _id }) {
   }
 
   if (error) {
-    console.error(error);
-    return <div>Error!</div>;
+    return <Navigate to="/Login" />;
   }
 
   return (

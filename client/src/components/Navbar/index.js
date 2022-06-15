@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import Auth from '../../utils/auth';
 import { authActions } from '../../slices/auth';
 import './navbar.scss';
@@ -45,7 +45,7 @@ const Navbar = (props) => {
               <i className="fa-solid fa-bars"></i>
             )}
           </button>
-          <ul className={`nav-items ${navbarOpen ? ' showMenu' : ''}`}>
+          <ul className={navbarOpen ? 'nav-items showMenu' : 'nav-items '}>
             <li>
               <NavLink to="/" onClick={closeMenu}>
                 Home
@@ -87,7 +87,7 @@ const Navbar = (props) => {
               <i className="fa-solid fa-bars"></i>
             )}
           </button>
-          <ul className={`nav-items ${navbarOpen ? ' showMenu' : ''}`}>
+          <ul className={navbarOpen ? 'nav-items showMenu' : 'nav-items '}>
             <li>
               <NavLink to="/" onClick={closeMenu}>
                 Home

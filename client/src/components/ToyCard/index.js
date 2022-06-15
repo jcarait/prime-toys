@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useMatch } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
+
 import 'react-toastify/dist/ReactToastify.css';
 import { NavLink } from 'react-router-dom';
-import Details from '../../pages/toyDetails';
 import './ToyCard.scss';
 
 export const ToyContext = React.createContext();
@@ -22,9 +21,6 @@ export default function ToyCard(card) {
   } = card;
   // calling our remove API
   // notifies user that a toy was successfully removed
-  const removeNotify = () => {
-    toast('listing removed successfully');
-  };
 
   const ProfileCardButtons = () => {
     const match = useMatch('/profile');

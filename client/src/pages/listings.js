@@ -12,7 +12,7 @@ export default function Listings() {
   const [activeFilter, setActiveFilter] = useState('all');
 
   // querying our API to fetch all toys on the database
-  const { loading, data, error } = useQuery(QUERY_ALL_TOYS);
+  const { data } = useQuery(QUERY_ALL_TOYS);
   const toys = data?.toys || [];
   const [toyData, setToyData] = useState(toys);
 

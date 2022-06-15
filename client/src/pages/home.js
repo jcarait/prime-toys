@@ -9,9 +9,11 @@ import './home.scss';
 
 export default function Home() {
   // API call to fetch all toys and then splicing it to get the most recent items
-  const { loading, data, error } = useQuery(QUERY_ALL_TOYS);
+  const { data } = useQuery(QUERY_ALL_TOYS);
   const toys = data?.toys || [];
   const toy = toys.slice(-3);
+
+  console.log(toys);
 
   return (
     <>

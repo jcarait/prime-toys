@@ -17,7 +17,7 @@ import {
   GET_USER_LISTINGS,
 } from '../../utils/queries';
 
-const AddToy = (data) => {
+const AddToy = () => {
   // defining the initial state of our add toy form to be blank
   const [toyData, setToyData] = useState({
     name: '',
@@ -96,7 +96,7 @@ const AddToy = (data) => {
     console.log(imageData);
 
     try {
-      const toyMutationResponse = await AddToy({
+      AddToy({
         variables: {
           input: {
             name: toyData.name,

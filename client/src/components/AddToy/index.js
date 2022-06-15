@@ -40,7 +40,6 @@ const AddToy = () => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
-      console.log(reader.result);
       setPreviewSource(reader.result);
     };
   };
@@ -91,9 +90,7 @@ const AddToy = () => {
       'https://api.cloudinary.com/v1_1/hmpkwjtxf/image/upload',
       formData
     );
-    const imageData = response;
     const ImageUrl = response.data.url;
-    console.log(imageData);
 
     try {
       AddToy({

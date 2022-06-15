@@ -1,4 +1,4 @@
-@import "../../variables.scss";
+@import '../../variables.scss';
 
 .card {
   border-radius: $border-radius;
@@ -63,8 +63,14 @@
         .post-time {
           text-align: end;
           font-size: 0.8rem;
-          margin-bottom: 1.1rem;
+          margin-bottom: 0.4rem;
           font-weight: 300;
+        }
+        .text-condition {
+          text-align: end;
+          font-size: 0.8rem;
+          margin-bottom: 0.3rem;
+          font-weight: 500;
         }
         .free-status {
           text-align: end;
@@ -100,7 +106,7 @@
           margin-left: 0.5rem;
         }
       }
-      .btn-details{
+      .btn-details {
         &:hover {
           background: $light;
           color: $red;

@@ -16,7 +16,7 @@ export default function ToyCard(card) {
     category,
     isFree,
     condition,
-    update,
+    posted,
     onClickRemove,
   } = card;
   // calling our remove API
@@ -64,7 +64,8 @@ export default function ToyCard(card) {
             <p className="toy-description">{category}</p>
           </div>
           <div className="text-float-right">
-            <p className="post-time">Posted 1 hr ago</p>
+            <p className="text-condition">{condition}</p>
+            <p className="post-time">{posted}</p>
             {isFree ? (
               <p className="free-status">Free</p>
             ) : (

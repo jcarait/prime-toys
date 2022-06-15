@@ -26,9 +26,11 @@ export default function Profile({ listings, _id }) {
           isFree
           category {
             _id
+            name
           }
           condition {
             _id
+            name
           }
         }
       }
@@ -51,9 +53,7 @@ export default function Profile({ listings, _id }) {
 
   const userListings = user?.user.listings || [];
 
-  const userListingCondition = user?.user.listings[0].category || [];
-
-  console.log(userListingCondition);
+  console.log(userListings);
 
   const removeNotify = () => {
     toast(`Listing removed successfully`);
@@ -132,6 +132,9 @@ export default function Profile({ listings, _id }) {
               name={listing.name}
               description={listing.description}
               image={listing.image}
+              category={listing.category.name}
+              isFree={listing.isFree}
+              posted={listing.createdAt}
               onClickRemove={(e) => {
                 removeToyHandler(e);
                 refetch({ _id });

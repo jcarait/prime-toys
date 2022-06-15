@@ -36,7 +36,7 @@ export default function Home() {
       <div className="about-prime-toys">
         <div>
           <h1>The One Stop Toy Site to donate or Trade your toys</h1>
-          <h2>Connect with user near you to exchange your goods</h2>
+          <h2>Connect with user near you to trade today</h2>
         </div>
 
         <div className="about-trade-or-free">

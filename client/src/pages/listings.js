@@ -7,7 +7,7 @@ import ToyCard from '../components/ToyCard';
 
 import { QUERY_ALL_TOYS } from '../utils/queries';
 
-export default function Listings() {
+export default function Listings(props) {
   // defaults the filter to be all
   const [activeFilter, setActiveFilter] = useState('all');
 
@@ -77,6 +77,7 @@ export default function Listings() {
                 image={toy.image}
                 category={toy.category.name}
                 condition={toy.condition.name}
+                posted={toy.createdAt}
               />
             ))}
           </div>

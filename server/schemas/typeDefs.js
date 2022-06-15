@@ -54,6 +54,7 @@ const typeDefs = gql`
     toys: [Toy]
     user: User
     conditions: [Condition]
+    toy(_id: String!): Toy
   }
   type Mutation {
     addUser(input: addUser): Auth

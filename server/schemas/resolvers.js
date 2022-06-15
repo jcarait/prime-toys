@@ -7,12 +7,18 @@ const resolvers = {
     user: async (parent, args, context) => {
       const user = await User.findById(context.user._id).populate({
         path: 'listings',
+        populate: { path: 'category', Model: Category },
+        // populate: { path: 'condition', Model: Condition },
       });
 
       return user;
     },
     categories: async () => {
       return await Category.find();
+    },
+    toy: async (parent, args) => {
+      console.log(args);
+      return await Toy.findById(args);
     },
     toys: async () => {
       return await Toy.find().populate('category condition');

@@ -62,6 +62,19 @@ export const QUERY_CONDITION = gql`
   }
 `;
 
+export const QUERY_TOY = gql`
+  query Query($id: String!) {
+    toy(_id: $id) {
+      _id
+      name
+      description
+      image
+      createdAt
+      isFree
+    }
+  }
+`;
+
 export const QUERY_USER_TOYS = gql`
   query getUserToys($user: ID) {
     toy(user: $user) {

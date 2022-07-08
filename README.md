@@ -9,6 +9,11 @@
 
 * [Heroku Deployment](https://prime-toys.herokuapp.com/)
 
+Test account details:
+
+Username: jono
+Password: password12345
+
 ## Description
 
 The inspiration for Prime Toys is based upon the following user Story:
